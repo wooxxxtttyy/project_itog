@@ -1,0 +1,22 @@
+services:
+  loadbalancer:
+    image: nginx:mainline-alpine3.21
+    ports:
+      - 8080:80
+    volumes:
+      - ./templates:/etc/nginx/templates
+      - ./frontend:/frontend
+
+  core-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.core
+    ports:
+      - 80
+
+  user-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.user
+    ports:
+      - 80
